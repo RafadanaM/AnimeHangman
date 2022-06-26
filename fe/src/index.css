@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  #root {
+    @apply h-screen w-screen
+  }
+
+  
+}
+
+@layer components {
+
+  .imageShadow {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    }
+
+  .notransition * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  .icon {
+    @apply h-7 w-7 md:h-11 md:w-11 cursor-pointer dark:fill-white hover:bg-baseCol hover:bg-opacity-50 dark:bg-opacity-10 p-1 md:p-2 rounded-full transition-colors duration-500
+  }
+
+  .oneHalf {
+    flex: 1.5
+  }
+
+  .half {
+    flex: 0.5
+  }
+ 
+  .correct {
+    --background-color: #6AAA64;
+    animation: roll 750ms ease forwards;
+  }
+
+
+  
+  @keyframes roll {
+    0% {
+        transform: rotateX(0);
+        background-color: white;
+      
+    }
+  
+    45% {
+        transform: rotateX(90deg);
+        background-color: white;
+        
+  
+    }
+  
+    55% {
+        transform: rotateX(90deg);
+        background-color: var(--background-color);
+       
+        
+    }
+    100% {
+        transform: rotateX(0);
+        background-color: var(--background-color);
+        color: white;
+        border-color: transparent
+    }
+
+}
+
+}

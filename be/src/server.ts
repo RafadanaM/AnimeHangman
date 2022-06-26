@@ -10,7 +10,7 @@ AppDataSource.initialize()
   .then(() => {
     // here you can start to work with your database
     console.log(process.env.NODE_ENV);
-    const app = new App([new AnimeController()], parseInt(process.env.port || '5000'));
+    const app = new App([new AnimeController()], parseInt(process.env.PORT || '5000'));
     app.listen();
   })
   .catch((error) => console.log(error));

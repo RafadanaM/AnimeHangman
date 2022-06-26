@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
   synchronize: process.env.NODE_ENV === 'production' ? false : true,
   entities: [__dirname + '/modules/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/db/migrations/*{.ts,.js}'],
-  // migrationsRun
+  migrationsRun: true,
 });
 
 export default AppDataSource;

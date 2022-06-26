@@ -53,11 +53,19 @@
   .half {
     flex: 0.5
   }
+
+  .quarter {
+    flex: 0.25
+  }
  
   .correct {
     --background-color: #6AAA64;
     animation: roll 750ms ease forwards;
   }
+
+  .key-shadow {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+      }
 
 
   

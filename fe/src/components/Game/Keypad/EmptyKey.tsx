@@ -2,8 +2,8 @@ interface IEmptyKey {
   row: string;
 }
 const EmptyKey = ({ row }: IEmptyKey) => {
-  return row === "secondRow" || row === "thirdRow" ? (
-    <div className={`${row === "secondRow" ? "half" : "oneHalf"}`} />
+  return row === "firstRow" || row === "secondRow" || row === "thirdRow" ? (
+    <div className={`${row === "secondRow" ? "half" : row === "thirdRow" ? "oneHalf" : "quarter"}`} />
   ) : null;
 };
 

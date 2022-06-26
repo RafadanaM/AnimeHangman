@@ -16,7 +16,7 @@ const Key = ({ char, state, onClick }: IKey) => {
   return (
     <button
       onClick={onClick(char)}
-      className={`flex-1 border-none ${stateClass} rounded select-none font-bold flex justify-center items-center uppercase transition-colors duration-500`}
+      className={`flex-1 border-none key-shadow ${stateClass} rounded select-none font-bold flex justify-center items-center uppercase transition-colors duration-500`}
     >
       {char}
     </button>

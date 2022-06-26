@@ -14,6 +14,18 @@ const theme = ["dark", "light"] as const;
 export type Theme = typeof theme[number];
 
 export const keys = {
+  numberRow: [
+    {key: "1"},
+    {key: "2"},
+    {key: "3"},
+    {key: "4"},
+    {key: "5"},
+    {key: "6"},
+    {key: "7"},
+    {key: "8"},
+    {key: "9"},
+    {key: "0"},
+  ],
   firstRow: [
     { key: "Q" },
     { key: "W" },

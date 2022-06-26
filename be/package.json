@@ -27,7 +27,8 @@
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.6",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -36,7 +37,7 @@
     "@types/morgan": "^1.9.3",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
-    "cross-env": "^7.0.3",
+   
     "eslint": "^8.2.0",
     "husky": "^7.0.4",
     "prettier": "2.4.1",

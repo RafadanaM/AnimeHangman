@@ -30,10 +30,10 @@ class Anime {
   genres: string;
 
   @Column()
-  media_type: string
+  media_type: string;
 
   @Column()
-  release_year: number
+  release_year: number;
 
   @Index({ unique: true })
   @Column({ type: 'date', unique: true })

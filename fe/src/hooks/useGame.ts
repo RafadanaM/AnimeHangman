@@ -94,6 +94,7 @@ const useGame = () => {
         wrongCount = nextWrongCount;
         if (nextWrongCount >= gameData.max_life) {
           status = "lose";
+          await fetchAnimeDetail(gameData.date);
         }
 
         history[character] = "incorrect";

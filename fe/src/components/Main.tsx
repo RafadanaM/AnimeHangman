@@ -63,7 +63,7 @@ const Main = () => {
           </>
         )}
       </div>
-      {modal && (
+      {(modal && !loading) && (
         <Modal
           wrongCount={wrongCount}
           maxLife={max_life}

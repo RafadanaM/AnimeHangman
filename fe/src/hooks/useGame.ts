@@ -7,7 +7,7 @@ import { alphaNumeric, isAlphanumeric } from "../utils/utils";
 import useLocalStorage from "./useLocalStorage";
 
 const useGame = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [gameData, setGameData] = useLocalStorage("gameData", {
     ...initialGameData,
   });
@@ -17,10 +17,10 @@ const useGame = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
     const currentDateString = generateCurrentDate();
     const fetchData = async (currentDateString: string) => {
       try {
+        setLoading(true);
         const data = await AnimeService.getAnimeByDate(currentDateString);
         setGameData({
           status: "in_progress",
@@ -37,19 +37,18 @@ const useGame = () => {
         });
       } catch {
         setGameData({ ...initialGameData });
+      } finally {
+        setLoading(false);
       }
     };
 
     if (currentDateString !== gameData.date || gameData.shouldFetch) {
       fetchData(currentDateString);
     }
-
-    setLoading(false);
   }, [gameData.date, gameData.shouldFetch, setGameData]);
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      console.log("Timer run");
       setGameData((prevState) => ({
         ...prevState,
         shouldFetch: true,

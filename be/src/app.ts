@@ -8,6 +8,7 @@ import Anime from './modules/anime/anime.entity';
 import jsonfile from 'jsonfile';
 import cors from 'cors';
 import DataJSON from './interfaces/datajson.interface';
+import Statistic from './modules/statistic/statistic.entity';
 
 const JSON_FILE_PATH = './src/db/data.json';
 
@@ -29,20 +30,26 @@ class App {
 
   private async loadAnimeData() {
     const animeRepository = AppDataSource.getRepository(Anime);
+    const statisticRepository = AppDataSource.getRepository(Statistic);
     const count = await animeRepository.count();
     if (count === 0) {
       const file: DataJSON | undefined = await jsonfile.readFile(JSON_FILE_PATH);
+
       if (file) {
         await animeRepository
           .createQueryBuilder()
           .insert()
-          .into(Anime)
           .values([...file.data])
+          .execute();
+        const data = file.data.map((x) => ({ anime_id: x.id }));
+        await statisticRepository
+          .createQueryBuilder()
+          .insert()
+          .values([...data])
           .execute();
       }
     }
   }
-
   private initMiddlewares() {
     this.app.use(cors({ origin: process.env.ORIGIN }));
     this.app.use(express.json());

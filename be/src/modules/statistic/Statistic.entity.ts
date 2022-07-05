@@ -17,18 +17,21 @@ class Statistic {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: 0, type: "decimal"})
-  avg_tries: number
+  @Column({ default: 0, type: 'decimal' })
+  avg_tries: number;
 
   @Column({ default: 0 })
   win: number;
 
-  @Column({ default: 0})
+  @Column({ default: 0 })
   participant: number;
 
-  @OneToOne(() => Anime)
-  @JoinColumn()
+  @OneToOne(() => Anime, (anime) => anime.statistic)
+  @JoinColumn({ name: 'anime_id' })
   anime: Anime;
+
+  @Column()
+  public anime_id: number;
 
   @CreateDateColumn()
   created: Date;

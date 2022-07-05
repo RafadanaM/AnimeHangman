@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import Statistic from '../statistic/statistic.entity';
 
 @Entity()
 class Anime {
@@ -38,6 +39,9 @@ class Anime {
   @Index({ unique: true })
   @Column({ type: 'date', unique: true })
   date: string;
+
+  @OneToOne(() => Statistic, (statistic) => statistic.anime, { cascade: true })
+  statistic: Statistic;
 
   @CreateDateColumn()
   created: Date;

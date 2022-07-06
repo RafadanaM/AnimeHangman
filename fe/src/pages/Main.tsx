@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import useGame from "../hooks/useGame";
-import Board from "./Game/Board";
-import Keypad from "./Game/Keypad/Keypad";
-import WrongTiles from "./Game/Tiles/WrongTiles";
-import Modal from "./Modal/Modal";
+import Board from "../components/Game/Board";
+import Keypad from "../components/Game/Keypad/Keypad";
+import WrongTiles from "../components/Game/Tiles/WrongTiles";
+import Modal from "../components/Modal/Modal";
 import { ReactComponent as Loading } from "../assets/loading.svg";
-import Hints from "./Game/Hints/Hints";
+import Hints from "../components/Game/Hints/Hints";
 
 const Main = () => {
   const [modal, setModal] = useState(false);

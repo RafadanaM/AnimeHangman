@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimeService } from "../api/services/AnimeService";
+import { StatisticService } from "../api/services/StatisticService";
 
 import { differenceToTomorrow, generateCurrentDate } from "../utils/date.utils";
 import { initialAnimeDetail, initialGameData } from "../utils/gameRule";
@@ -22,6 +23,7 @@ const useGame = () => {
       try {
         setLoading(true);
         const data = await AnimeService.getAnimeByDate(currentDateString);
+        await StatisticService.participate(currentDateString);
         setGameData({
           status: "in_progress",
           currentGuess: data.title.toUpperCase().replace(alphaNumeric, "_"),
@@ -63,6 +65,7 @@ const useGame = () => {
     async (character: string) => {
       const fetchAnimeDetail = async (date: string) => {
         const data = await AnimeService.getAnimeDetailByDate(date);
+        await StatisticService.win(data.id, gameData.wrongCount);
         setAnimeDetail(data);
       };
       // let prevState = { ...gameData };

@@ -9,7 +9,16 @@ class StatisticService {
     const stats = await this.statisticRepository
       .createQueryBuilder('s')
       .leftJoin('s.anime', 'anime')
-      .select(['s.id', 's.avg_tries', 's.win', 's.participant', 'anime.date'])
+      .select([
+        's.id',
+        's.avg_tries',
+        's.win',
+        's.participant',
+        's.anime_id',
+        'anime.date',
+        'anime.image',
+        'anime.title',
+      ])
       .where('anime.date <= :date', { date })
       .orderBy('anime.date', 'DESC')
       .skip(offset)

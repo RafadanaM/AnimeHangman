@@ -9,7 +9,7 @@ interface IIconLink {
 const IconLink = ({ to, element }: IIconLink) => {
   return (
     <Link to={to}>
-      <div className="icon-container flex items-center justify-center w-6 h-6 md:w-10 md:h-10">
+      <div className="icon-container flex items-center justify-center ">
         {element}
       </div>
     </Link>

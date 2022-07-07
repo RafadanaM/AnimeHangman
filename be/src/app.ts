@@ -9,7 +9,6 @@ import jsonfile from 'jsonfile';
 import cors from 'cors';
 import DataJSON from './interfaces/datajson.interface';
 import Statistic from './modules/statistic/statistic.entity';
-
 const JSON_FILE_PATH = './src/db/data.json';
 
 class App {

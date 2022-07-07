@@ -1,13 +1,27 @@
-import React, { memo, forwardRef } from "react";
+import { memo, forwardRef, useRef, useEffect, useState } from "react";
+import useObserver from "../../../hooks/useObserver";
 import StatDetail from "../../../interfaces/StatDetail.interface";
+import { mergeRefs } from "../../../utils/mergeRefs";
 import Image from "../../Image";
 
 interface IStatCard {
   data: StatDetail;
+  delay: number;
 }
 
 const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
-  ({ data }, ref) => {
+  ({ data, delay }, ref) => {
+    const [visible, setVisible] = useState(false);
+    const cardRef = useRef<HTMLDivElement | null>(null);
+    const entry = useObserver(cardRef);
+
+    useEffect(() => {
+      if (!entry) return;
+      if (entry.isIntersecting) {
+        setVisible(true);
+      }
+    }, [entry]);
+
     const calcPercentage = (win: number, participants: number) => {
       let result = "0";
       if (participants > 0) {
@@ -18,8 +32,11 @@ const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
 
     return (
       <div
-        ref={ref}
-        className=" bg-white dark:bg-slate-900 h-40 rounded-md p-2 shadow-lg border dark:border-slate-600 flex overflow-hidden divide-x-2 gap-2"
+        ref={mergeRefs(cardRef, ref)}
+        style={{ transitionDelay: `${delay}ms` }}
+        className={`bg-white dark:bg-slate-900 h-40 rounded-md p-2 shadow-lg border dark:border-slate-600 flex overflow-hidden divide-x-2 gap-2 transition-all ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"
+        }`}
       >
         <div className="rounded overflow-hidden border border-gray-500">
           <Image className="h-full w-24" src={data.anime.image} alt="cover" />

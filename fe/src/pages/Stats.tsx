@@ -4,6 +4,7 @@ import usePaginateStatistics from "../hooks/usePaginateStatistics";
 import { GameData } from "../interfaces/GameData.interface";
 import { ReactComponent as Loading } from "../assets/loading.svg";
 import useObserver from "../hooks/useObserver";
+import { LIMIT } from "../utils/utils";
 
 const Stats = () => {
   const [hideFirst, setHideFirst] = useState(true);
@@ -11,7 +12,7 @@ const Stats = () => {
 
   const { data, hasMore, loading } = usePaginateStatistics(offset);
   const divRef = useRef<HTMLDivElement | null>(null);
-  const entry = useObserver(divRef, [data]);
+  const entry = useObserver(divRef, { rootMargin: "100px" }, [data]);
 
   useEffect(() => {
     if (!entry) return;
@@ -37,13 +38,26 @@ const Stats = () => {
           if (idx === 0 && hideFirst) return null;
 
           if (data.length === idx + 1)
-            return <StatsCard ref={divRef} key={detail.id} data={detail} />;
+            return (
+              <StatsCard
+                ref={divRef}
+                key={detail.id}
+                data={detail}
+                delay={(idx % LIMIT) * 100}
+              />
+            );
 
-          return <StatsCard key={detail.id} data={detail} />;
+          return (
+            <StatsCard
+              key={detail.id}
+              data={detail}
+              delay={(idx % LIMIT) * 100}
+            />
+          );
         })}
       </div>
       {loading && (
-        <Loading className="fill-current w-10 h-10 animate-spin mx-auto mt-1" />
+        <Loading className="fill-current w-10 h-10 animate-spin mx-auto mt-1 dark:fill-white" />
       )}
     </div>
   );

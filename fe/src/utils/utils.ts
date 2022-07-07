@@ -4,6 +4,8 @@ export const isAlphanumeric = (character: string) => {
   return /^[a-z0-9]+$/i.test(character);
 };
 
+export const LIMIT = 5
+
 const state = ["correct", "incorrect"] as const;
 export type State = typeof state[number];
 

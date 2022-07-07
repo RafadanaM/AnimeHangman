@@ -2,6 +2,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 
 const useObserver = (
   ref: RefObject<HTMLElement>,
+  options: IntersectionObserverInit  = {},
   triggers: Array<any> = []
 ) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -11,8 +12,8 @@ const useObserver = (
   useEffect(() => {
     observerRef.current = new IntersectionObserver(([entry]) => {
       setObserverEntry(entry);
-    });
-  }, []);
+    }, {...options});
+  }, [options]);
 
   useEffect(() => {
     if (!observerRef.current) return;

@@ -2,16 +2,16 @@ import { NextFunction, Request, Router, Response } from 'express';
 import { RequestTypes } from '../../enums/request.enum';
 import Controller from '../../interfaces/controller.interface';
 import validationMiddleware from '../../middlewares/validation.middleware';
-import { GetStatisticsDTO, ParticipateDTO, WinDTO } from './statistic.dto';
-import StatisticService from './statistic.service';
+import { GetStatisticsDTO, ParticipateDTO, WinDTO } from './statistics.dto';
+import StatisticsService from './statistics.service';
 
-class StatisticController implements Controller {
+class StatisticsController implements Controller {
   public path: string = '/statistics';
   public router: Router = Router();
-  public statisticService: StatisticService;
+  public statisticsService: StatisticsService;
 
   constructor() {
-    this.statisticService = new StatisticService();
+    this.statisticsService = new StatisticsService();
     this.initRoutes();
   }
 
@@ -28,7 +28,7 @@ class StatisticController implements Controller {
   ) => {
     try {
       const { date, limit, offset } = req.query;
-      const stats = await this.statisticService.getStatisticsUntilDate(date!, offset!, limit!);
+      const stats = await this.statisticsService.getStatisticsUntilDate(date!, offset!, limit!);
       res.send({ stats });
     } catch (error) {
       next(error);
@@ -38,7 +38,7 @@ class StatisticController implements Controller {
   private participateHandler = async (req: Request<{}, {}, ParticipateDTO>, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      await this.statisticService.participate(data.date);
+      await this.statisticsService.participate(data.date);
       res.status(201).send({ message: 'participation successfully recorded' });
     } catch (error) {
       next(error);
@@ -48,11 +48,11 @@ class StatisticController implements Controller {
   private winHandler = async (req: Request<{}, {}, WinDTO>, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
-      await this.statisticService.win(data.anime_id, data.tries);
+      await this.statisticsService.win(data.anime_id, data.tries);
       res.status(201).send({ message: 'win successfully recorded' });
     } catch (error) {
       next(error);
     }
   };
 }
-export default StatisticController;
+export default StatisticsController;

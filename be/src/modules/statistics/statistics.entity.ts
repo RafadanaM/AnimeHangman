@@ -13,7 +13,7 @@ import Anime from '../anime/anime.entity';
 // but I'm afraid it will exceed the free tier db row
 
 @Entity()
-class Statistic {
+class Statistics {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -39,4 +39,4 @@ class Statistic {
   @UpdateDateColumn()
   updated: Date;
 }
-export default Statistic;
+export default Statistics;

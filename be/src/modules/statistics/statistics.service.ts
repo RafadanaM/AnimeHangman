@@ -1,12 +1,12 @@
 import AppDataSource from '../../data-source';
 import Anime from '../anime/anime.entity';
-import Statistic from './statistic.entity';
+import Statistics from './statistics.entity';
 
-class StatisticService {
-  private statisticRepository = AppDataSource.getRepository(Statistic);
+class StatisticsService {
+  private statisticsRepository = AppDataSource.getRepository(Statistics);
 
-  public async getStatisticsUntilDate(date: string, offset: number, limit: number): Promise<Statistic[]> {
-    const stats = await this.statisticRepository
+  public async getStatisticsUntilDate(date: string, offset: number, limit: number): Promise<Statistics[]> {
+    const stats = await this.statisticsRepository
       .createQueryBuilder('s')
       .leftJoin('s.anime', 'anime')
       .select([
@@ -29,7 +29,7 @@ class StatisticService {
   }
 
   public async participate(date: string): Promise<void> {
-    await this.statisticRepository
+    await this.statisticsRepository
       .createQueryBuilder()
       .where((qb) => {
         const subQuery = qb
@@ -48,7 +48,7 @@ class StatisticService {
     return;
   }
   public async win(anime_id: number, tries: number): Promise<void> {
-    await this.statisticRepository
+    await this.statisticsRepository
       .createQueryBuilder()
       .update()
       .set({ win: () => 'win + 1', avg_tries: () => `avg_tries + ((${tries} - avg_tries) / (win + 1))` })
@@ -56,4 +56,4 @@ class StatisticService {
       .execute();
   }
 }
-export default StatisticService;
+export default StatisticsService;

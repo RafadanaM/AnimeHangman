@@ -4,7 +4,7 @@ import validateEnv from './utils/validateEnv';
 import 'reflect-metadata';
 import AppDataSource from './data-source';
 import AnimeController from './modules/anime/anime.controller';
-import StatisticController from './modules/statistic/statistic.controller';
+import StatisticController from './modules/statistics/statistics.controller';
 validateEnv();
 
 AppDataSource.initialize()

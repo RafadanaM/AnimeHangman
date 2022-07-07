@@ -8,7 +8,7 @@ import Anime from './modules/anime/anime.entity';
 import jsonfile from 'jsonfile';
 import cors from 'cors';
 import DataJSON from './interfaces/datajson.interface';
-import Statistic from './modules/statistic/statistic.entity';
+import Statistics from './modules/statistics/statistics.entity';
 const JSON_FILE_PATH = './src/db/data.json';
 
 class App {
@@ -29,7 +29,7 @@ class App {
 
   private async loadAnimeData() {
     const animeRepository = AppDataSource.getRepository(Anime);
-    const statisticRepository = AppDataSource.getRepository(Statistic);
+    const statisticsRepository = AppDataSource.getRepository(Statistics);
     const count = await animeRepository.count();
     if (count === 0) {
       const file: DataJSON | undefined = await jsonfile.readFile(JSON_FILE_PATH);
@@ -41,7 +41,7 @@ class App {
           .values([...file.data])
           .execute();
         const data = file.data.map((x) => ({ anime_id: x.id }));
-        await statisticRepository
+        await statisticsRepository
           .createQueryBuilder()
           .insert()
           .values([...data])

@@ -1,5 +1,6 @@
 import React, { memo, forwardRef } from "react";
 import StatDetail from "../../../interfaces/StatDetail.interface";
+import Image from "../../Image";
 
 interface IStatCard {
   data: StatDetail;
@@ -21,7 +22,7 @@ const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
         className=" bg-white dark:bg-slate-900 h-40 rounded-md p-2 shadow-lg border dark:border-slate-600 flex overflow-hidden divide-x-2 gap-2"
       >
         <div className="rounded overflow-hidden border border-gray-500">
-          <img className="h-full w-auto" src={data.anime.image} alt="cover" />
+          <Image className="h-full w-24" src={data.anime.image} alt="cover" />
         </div>
         <div className="flex-1 pl-2 h-full ">
           <a

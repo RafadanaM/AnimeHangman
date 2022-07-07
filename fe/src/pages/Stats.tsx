@@ -1,30 +1,24 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StatsCard from "../components/Card/Stats/StatsCard";
 import usePaginateStatistics from "../hooks/usePaginateStatistics";
 import { GameData } from "../interfaces/GameData.interface";
 import { ReactComponent as Loading } from "../assets/loading.svg";
+import useObserver from "../hooks/useObserver";
 
 const Stats = () => {
   const [hideFirst, setHideFirst] = useState(true);
   const [offset, setOffset] = useState(0);
 
   const { data, hasMore, loading } = usePaginateStatistics(offset);
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const entry = useObserver(divRef, [data]);
 
-  const observer = useRef<IntersectionObserver | null>(null);
-  const lastElementRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setOffset((prevState) => prevState + 1);
-        }
-      });
-
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
+  useEffect(() => {
+    if (!entry) return;
+    if (entry.isIntersecting && hasMore) {
+      setOffset((prevState) => prevState + 1);
+    }
+  }, [entry, hasMore]);
 
   useEffect(() => {
     const x = localStorage.getItem("gameData");
@@ -43,9 +37,7 @@ const Stats = () => {
           if (idx === 0 && hideFirst) return null;
 
           if (data.length === idx + 1)
-            return (
-              <StatsCard ref={lastElementRef} key={detail.id} data={detail} />
-            );
+            return <StatsCard ref={divRef} key={detail.id} data={detail} />;
 
           return <StatsCard key={detail.id} data={detail} />;
         })}

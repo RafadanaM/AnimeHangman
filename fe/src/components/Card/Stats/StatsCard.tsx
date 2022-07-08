@@ -6,14 +6,14 @@ import Image from "../../Image";
 
 interface IStatCard {
   data: StatDetail;
-  delay: number;
+
 }
 
 const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
-  ({ data, delay }, ref) => {
+  ({ data }, ref) => {
     const [visible, setVisible] = useState(false);
     const cardRef = useRef<HTMLDivElement | null>(null);
-    const entry = useObserver(cardRef);
+    const entry = useObserver(cardRef, { threshold: 0.2 });
 
     useEffect(() => {
       if (!entry) return;
@@ -33,8 +33,8 @@ const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
     return (
       <div
         ref={mergeRefs(cardRef, ref)}
-        style={{ transitionDelay: `${delay}ms` }}
-        className={`bg-primary dark:bg-primary-darker h-40 rounded-md p-2 shadow-lg border dark:border-secondary-darker flex overflow-hidden divide-x-2 gap-2 transition-all duration-200 ${
+        // style={{ transitionDelay: `${delay}ms` }}
+        className={`bg-primary dark:bg-primary-darker h-40 rounded-md p-2 shadow-lg border dark:border-secondary-darker flex overflow-hidden divide-x-2 gap-2 transition-all ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"
         }`}
       >

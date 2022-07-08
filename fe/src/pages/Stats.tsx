@@ -4,7 +4,6 @@ import usePaginateStatistics from "../hooks/usePaginateStatistics";
 import { GameData } from "../interfaces/GameData.interface";
 import { ReactComponent as Loading } from "../assets/loading.svg";
 import useObserver from "../hooks/useObserver";
-import { LIMIT } from "../utils/utils";
 
 const Stats = () => {
   const [hideFirst, setHideFirst] = useState(true);
@@ -38,22 +37,8 @@ const Stats = () => {
           if (idx === 0 && hideFirst) return null;
 
           if (data.length === idx + 1)
-            return (
-              <StatsCard
-                ref={divRef}
-                key={detail.id}
-                data={detail}
-                delay={(idx % LIMIT) * 100}
-              />
-            );
-
-          return (
-            <StatsCard
-              key={detail.id}
-              data={detail}
-              delay={(idx % LIMIT) * 100}
-            />
-          );
+            return <StatsCard ref={divRef} key={detail.id} data={detail} />;
+          return <StatsCard key={detail.id} data={detail} />;
         })}
       </div>
       {loading && (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { StatisticService } from "../api/services/StatisticService";
 import StatDetail from "../interfaces/StatDetail.interface";
+import { LIMIT } from "../utils/utils";
 
 const usePaginateStatistics = (offset: number) => {
   const [data, setData] = useState<StatDetail[]>([]);
@@ -12,7 +13,7 @@ const usePaginateStatistics = (offset: number) => {
     const getStats = async (offset: number) => {
       try {
         setLoading(true);
-        const data = await StatisticService.getStatsUntilToday(offset * 5);
+        const data = await StatisticService.getStatsUntilToday(offset * LIMIT);
 
         if (data.stats.length > 0) {
           setData((prevState) => [...prevState, ...data.stats]);

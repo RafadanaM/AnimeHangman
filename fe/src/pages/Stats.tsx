@@ -25,7 +25,7 @@ const Stats = () => {
     const x = localStorage.getItem("gameData");
     if (x) {
       const data: GameData = JSON.parse(x);
-      if (data.status === "win") {
+      if (data?.status === "win") {
         setHideFirst(false);
       }
     }
@@ -57,7 +57,7 @@ const Stats = () => {
         })}
       </div>
       {loading && (
-        <Loading className="fill-current w-10 h-10 animate-spin mx-auto mt-1 dark:fill-white" />
+        <Loading className="fill-current w-10 h-10 animate-spin mx-auto mt-1 dark:fill-primary" />
       )}
     </div>
   );

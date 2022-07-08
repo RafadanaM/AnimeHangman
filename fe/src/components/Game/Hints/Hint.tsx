@@ -10,7 +10,7 @@ const Hint = ({ content, size = "normal" }: IHint) => {
     <div
       className={`capitalize font-semibold ${
         size === "normal" ? "py-1 px-1.5 text-sm md:text-base" : "px-1 py-0.5"
-      } rounded-md text-gray-700 dark:text-slate-200 bg-baseCol dark:bg-slate-700`}
+      } rounded-md dark:text-secondary bg-secondary dark:bg-secondary-darker`}
     >
       {content}
     </div>

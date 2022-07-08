@@ -34,23 +34,23 @@ const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
       <div
         ref={mergeRefs(cardRef, ref)}
         style={{ transitionDelay: `${delay}ms` }}
-        className={`bg-white dark:bg-slate-900 h-40 rounded-md p-2 shadow-lg border dark:border-slate-600 flex overflow-hidden divide-x-2 gap-2 transition-all ${
+        className={`bg-primary dark:bg-primary-darker h-40 rounded-md p-2 shadow-lg border dark:border-secondary-darker flex overflow-hidden divide-x-2 gap-2 transition-all duration-200 ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"
         }`}
       >
-        <div className="rounded overflow-hidden border border-gray-500">
+        <div className="rounded overflow-hidden border border-secondary-dark">
           <Image className="h-full w-24" src={data.anime.image} alt="cover" />
         </div>
         <div className="flex-1 pl-2 h-full ">
           <a
-            className="font-semibold text-blue-600 dark:text-blue-300 before:content-['_↗__'] cursor-pointer "
+            className="font-semibold text-accent dark:text-accent-light before:content-['_↗__'] cursor-pointer "
             href={`https://myanimelist.net/anime/${data.anime_id}}`}
             target="_blank"
             rel="noreferrer"
           >
             {data.anime.title}
           </a>
-          <ul className="text-sm font-medium dark:text-white">
+          <ul className="text-sm font-medium dark:text-primary">
             <li>Participants: {data.participant}</li>
             <li>Average Tries: {data.avg_tries.slice(0, 3)}</li>
             <li>

@@ -4,6 +4,10 @@
 
 @layer base {
 
+  :root {
+    --color-success: #6AAA64
+  }
+
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -49,11 +53,11 @@
   }
 
   .icon {
-    @apply dark:fill-white dark:bg-opacity-10
+    @apply dark:fill-primary
   }
 
   .icon-container {
-    @apply h-7 w-7 md:h-11 md:w-11 cursor-pointer hover:bg-baseCol hover:bg-opacity-50 p-1 md:p-2 rounded-full transition-colors duration-500
+    @apply h-7 w-7 md:h-11 md:w-11 cursor-pointer hover:bg-secondary hover:bg-opacity-50 dark:hover:bg-secondary-darker p-1 md:p-2 rounded-full transition-colors duration-500
   }
 
   .oneHalf {
@@ -69,15 +73,9 @@
   }
  
   .correct {
-    --background-color: #6AAA64;
+    --background-color: var(--color-success);
     animation: roll 750ms ease forwards;
   }
-
-  .key-shadow {
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-      }
-
-
   
   @keyframes roll {
     0% {

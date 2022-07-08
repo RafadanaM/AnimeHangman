@@ -9,14 +9,14 @@ interface IKey {
 const Key = ({ char, state, onClick }: IKey) => {
   const stateClass = state
     ? state === "correct"
-      ? "bg-correct text-white hover:bg-correctHover"
-      : "bg-red-500 text-white hover:bg-red-400"
-    : "bg-baseCol hover:bg-gray-200 dark:hover:bg-baseCol";
+      ? "bg-success text-primary hover:bg-success-light"
+      : "bg-error text-primary hover:bg-error-light"
+    : "bg-secondary hover:bg-secondary-light dark:bg-secondary-light dark:hover:bg-secondary";
 
   return (
     <button
       onClick={onClick(char)}
-      className={`flex-1 border-none key-shadow ${stateClass} rounded select-none font-bold flex justify-center items-center uppercase transition-colors duration-500`}
+      className={`flex-1 border-none shadow-md ${stateClass} rounded select-none font-bold flex justify-center items-center uppercase transition-colors duration-500`}
     >
       {char}
     </button>

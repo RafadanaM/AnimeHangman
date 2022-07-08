@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { differenceToTomorrow } from "../utils/date.utils";
 
-
 const useCounterToTomorrow = () => {
   const [count, setCount] = useState(() => {
     return differenceToTomorrow();

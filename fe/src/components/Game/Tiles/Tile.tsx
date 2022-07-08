@@ -15,11 +15,11 @@ const Tile = ({
 }: ITile) => {
   return (
     <div
-      className={`flex h-14 md:h-20 items-center justify-center rounded-md dark:text-white font-bold ${
+      className={`flex h-14 md:h-20 items-center justify-center rounded-md dark:text-primary font-bold ${
         withBorder
-          ? `w-10 md:w-16 bg-white text-xl md:text-2xl ${
+          ? `w-10 md:w-16 bg-primary text-xl md:text-2xl ${
               isFirstWord ? " border-4" : "border"
-            } border-gray-600 dark:border-indigo-500`
+            } border-secondary-darker dark:border-accent`
           : "w-5 text-2xl md:text-4xl"
       }   ${className || ""}`}
     >

@@ -9,12 +9,12 @@ const WrongTile = ({ isWrong }: IWrongTile) => {
   return (
     <div
       className={`h-12 md:h-14 rounded transition-colors duration-500 p-2 ${
-        isWrong ? "bg-red-500" : "bg-baseCol dark:bg-slate-700"
+        isWrong ? "bg-error" : "bg-secondary dark:bg-secondary-darker"
       }`}
     >
       <Close
         className={`h-full w-auto transition-colors duration-500 ${
-          isWrong ? "fill-white" : "fill-white dark:fill-slate-500"
+          isWrong ? "fill-primary" : "fill-primary dark:fill-secondary-dark"
         }`}
       />
     </div>

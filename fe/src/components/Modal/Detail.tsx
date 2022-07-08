@@ -9,7 +9,7 @@ const Detail = ({ rank, score, type, status, className = "" }: IDetail) => {
   const formatStatus = status?.split("_").join(" ");
   return (
     <div
-      className={`mt-4 font-bold px-1 dark:text-white capitalize ${className}`}
+      className={`mt-4 font-bold px-1 dark:text-primary capitalize ${className}`}
     >
       {rank && (
         <div>

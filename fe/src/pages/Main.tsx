@@ -51,9 +51,9 @@ const Main = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-[1024px] 2xl:w-[1440px] max-w-full h-[calc(100%-64px)]  mx-auto gap-y-2 py-3 px-2 md:px-0">
+      <div className="flex flex-col justify-center items-center w-[1024px] 2xl:w-[1440px] max-w-full h-[calc(100%-64px)] mx-auto gap-y-2 py-3 px-2 md:px-0">
         {loading ? (
-          <Loading className="fill-current w-10 h-10 animate-spin" />
+          <Loading className=" dark:fill-primary w-10 h-10 animate-spin" />
         ) : (
           <>
             <WrongTiles wrongNumber={wrongCount} maxLife={max_life} />
@@ -63,7 +63,7 @@ const Main = () => {
           </>
         )}
       </div>
-      {(modal && !loading) && (
+      {modal && !loading && (
         <Modal
           wrongCount={wrongCount}
           maxLife={max_life}

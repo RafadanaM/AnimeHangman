@@ -4,7 +4,7 @@ export const isAlphanumeric = (character: string) => {
   return /^[a-z0-9]+$/i.test(character);
 };
 
-export const LIMIT = 5
+export const LIMIT = 10;
 
 const state = ["correct", "incorrect"] as const;
 export type State = typeof state[number];
@@ -17,16 +17,16 @@ export type Theme = typeof theme[number];
 
 export const keys = {
   numberRow: [
-    {key: "1"},
-    {key: "2"},
-    {key: "3"},
-    {key: "4"},
-    {key: "5"},
-    {key: "6"},
-    {key: "7"},
-    {key: "8"},
-    {key: "9"},
-    {key: "0"},
+    { key: "1" },
+    { key: "2" },
+    { key: "3" },
+    { key: "4" },
+    { key: "5" },
+    { key: "6" },
+    { key: "7" },
+    { key: "8" },
+    { key: "9" },
+    { key: "0" },
   ],
   firstRow: [
     { key: "Q" },

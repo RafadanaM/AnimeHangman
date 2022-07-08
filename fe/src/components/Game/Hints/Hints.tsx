@@ -19,7 +19,7 @@ const Hints = ({ genres, media_type, year }: IHints) => {
   return isOpen ? (
     <div className="flex items-center gap-2 flex-wrap">
       <Close
-        className="cursor-pointer text-gray-700 dark:text-white stroke-current"
+        className="cursor-pointer dark:text-secondary stroke-current"
         onClick={toggleOpen}
       />
       {media_type && <Hint content={media_type} />}
@@ -29,7 +29,7 @@ const Hints = ({ genres, media_type, year }: IHints) => {
   ) : (
     <button
       onClick={toggleOpen}
-      className="capitalize font-semibold py-1 px-1.5 text-sm md:text-base rounded-md text-gray-700 dark:text-slate-200 bg-baseCol dark:bg-slate-700"
+      className="capitalize font-semibold py-1 px-1.5 text-sm md:text-base rounded-md dark:text-secondary bg-secondary dark:bg-secondary-darker"
     >
       Reveal Hints
     </button>

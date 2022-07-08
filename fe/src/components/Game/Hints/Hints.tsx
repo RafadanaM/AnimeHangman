@@ -17,7 +17,7 @@ const Hints = ({ genres, media_type, year }: IHints) => {
   };
 
   return isOpen ? (
-    <div className="flex items-center gap-2 flex-wrap">
+    <ul className="flex items-center gap-2 flex-wrap">
       <Close
         className="cursor-pointer dark:text-secondary stroke-current"
         onClick={toggleOpen}
@@ -25,7 +25,7 @@ const Hints = ({ genres, media_type, year }: IHints) => {
       {media_type && <Hint content={media_type} />}
       {year && year > 0 ? <Hint content={String(year)} /> : null}
       {genres && <Genres genres={genres} />}
-    </div>
+    </ul>
   ) : (
     <button
       onClick={toggleOpen}

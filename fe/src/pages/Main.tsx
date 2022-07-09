@@ -46,6 +46,8 @@ const Main = () => {
   }, [handleKeyUp]);
 
   useEffect(() => {
+    console.log("main page use Effect");
+    
     setModal(status === "lose" || status === "win");
   }, [status]);
 

@@ -43,6 +43,7 @@ const useGame = () => {
         setLoading(false);
       }
     };
+    console.log("main useEffect");
 
     if (currentDateString !== gameData.date || gameData.shouldFetch) {
       fetchData(currentDateString);
@@ -63,6 +64,8 @@ const useGame = () => {
 
   const addNewGuess = useCallback(
     async (character: string) => {
+      console.log("add new guess running");
+
       const fetchAnimeDetail = async (date: string) => {
         const data = await AnimeService.getAnimeDetailByDate(date);
         await StatisticService.win(data.id, gameData.wrongCount);

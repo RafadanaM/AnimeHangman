@@ -25,11 +25,6 @@ const Main = () => {
     media_type,
   } = useGame();
 
-  const handleStorage = (e: StorageEvent) => {
-    if (e.key && e.oldValue) {
-      localStorage.setItem(e.key, e.oldValue);
-    }
-  };
 
   const handleCloseModal = () => {
     setModal(false);
@@ -37,17 +32,13 @@ const Main = () => {
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyUp);
-    window.addEventListener("storage", handleStorage);
 
     return () => {
       window.removeEventListener("keyup", handleKeyUp);
-      window.removeEventListener("storage", handleStorage);
     };
   }, [handleKeyUp]);
 
   useEffect(() => {
-    console.log("main page use Effect");
-    
     setModal(status === "lose" || status === "win");
   }, [status]);
 

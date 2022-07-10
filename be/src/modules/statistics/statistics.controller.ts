@@ -2,7 +2,7 @@ import { NextFunction, Request, Router, Response } from 'express';
 import { RequestTypes } from '../../enums/request.enum';
 import Controller from '../../interfaces/controller.interface';
 import validationMiddleware from '../../middlewares/validation.middleware';
-import { GetStatisticsDTO, ParticipateDTO, WinDTO } from './statistics.dto';
+import { GetStatisticsDTO, ParticipateDTO } from './statistics.dto';
 import StatisticsService from './statistics.service';
 
 class StatisticsController implements Controller {
@@ -17,7 +17,6 @@ class StatisticsController implements Controller {
 
   private initRoutes(): void {
     this.router.get('', validationMiddleware(GetStatisticsDTO, RequestTypes.QUERY), this.getStatisticsUntilDateHandler);
-    this.router.patch('/win', validationMiddleware(WinDTO, RequestTypes.BODY), this.winHandler);
     this.router.patch('/participate', validationMiddleware(ParticipateDTO, RequestTypes.BODY), this.participateHandler);
   }
 
@@ -45,14 +44,5 @@ class StatisticsController implements Controller {
     }
   };
 
-  private winHandler = async (req: Request<{}, {}, WinDTO>, res: Response, next: NextFunction) => {
-    try {
-      const data = req.body;
-      await this.statisticsService.win(data.anime_id, data.tries);
-      res.status(201).send({ message: 'win successfully recorded' });
-    } catch (error) {
-      next(error);
-    }
-  };
 }
 export default StatisticsController;

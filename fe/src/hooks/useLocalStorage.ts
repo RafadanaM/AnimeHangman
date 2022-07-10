@@ -17,8 +17,6 @@ const useLocalStorage = <T>(
   });
 
   useEffect(() => {
-    console.log("useLocalStorage");
-
     localStorage.setItem(key, JSON.stringify(value));
   }, [value, key]);
 

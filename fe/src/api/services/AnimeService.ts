@@ -1,5 +1,6 @@
 import AnimeDetailResponse from "../../interfaces/AnimeDetailResponse.interface";
 import AnimeResponse from "../../interfaces/AnimeResponse.interface";
+import VerifyResponse from "../../interfaces/VerifyResponse.interface";
 
 import api from "../api";
 
@@ -17,6 +18,15 @@ export const AnimeService = {
     const res = await api.get<AnimeDetailResponse>(
       `${BASE_SERVICE_URL}/detail?date=${date}`
     );
+    return res.data;
+  },
+
+  verifyAnswer: async (title: string, tries: number, date: string) => {
+    const res = await api.patch<VerifyResponse>(`${BASE_SERVICE_URL}/verify`, {
+      title,
+      date,
+      tries,
+    });
     return res.data;
   },
 };

@@ -21,10 +21,5 @@ export const StatisticService = {
     });
   },
 
-  win: async (anime_id: number, tries: number) => {
-    await api.patch(`${BASE_SERVICE_URL}/win`, {
-      anime_id,
-      tries,
-    });
-  },
+
 };

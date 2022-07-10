@@ -43,7 +43,6 @@ const useGame = () => {
         setLoading(false);
       }
     };
-    console.log("main useEffect");
 
     if (currentDateString !== gameData.date || gameData.shouldFetch) {
       fetchData(currentDateString);
@@ -64,14 +63,6 @@ const useGame = () => {
 
   const addNewGuess = useCallback(
     async (character: string) => {
-      console.log("add new guess running");
-
-      const fetchAnimeDetail = async (date: string) => {
-        const data = await AnimeService.getAnimeDetailByDate(date);
-        await StatisticService.win(data.id, gameData.wrongCount);
-        setAnimeDetail(data);
-      };
-      // let prevState = { ...gameData };
       let history = { ...gameData.history };
       let currentGuess = gameData.currentGuess;
       let status = gameData.status;
@@ -90,8 +81,17 @@ const useGame = () => {
         const guess = guessArr.join("");
         currentGuess = guess;
         if (guess === gameData.title) {
-          status = "win";
-          await fetchAnimeDetail(gameData.date);
+          const data = await AnimeService.verifyAnswer(
+            currentGuess,
+            gameData.wrongCount,
+            gameData.date
+          );
+          if (data.isCorrect) {
+            status = "win";
+          } else {
+            status = "lose";
+          }
+          setAnimeDetail(data.anime);
         }
         history[character] = "correct";
       } else {
@@ -99,7 +99,8 @@ const useGame = () => {
         wrongCount = nextWrongCount;
         if (nextWrongCount >= gameData.max_life) {
           status = "lose";
-          await fetchAnimeDetail(gameData.date);
+          const data = await AnimeService.getAnimeDetailByDate(gameData.date);
+          setAnimeDetail(data);
         }
 
         history[character] = "incorrect";

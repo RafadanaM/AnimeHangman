@@ -6,7 +6,7 @@ interface IGenres {
 }
 const Genres = ({ genres, size = "normal" }: IGenres) => {
   return (
-    <div
+    <ul
       className={`inline-flex items-center gap-2 flex-wrap ${
         size === "normal" ? "" : "text-sm"
       }`}
@@ -14,7 +14,7 @@ const Genres = ({ genres, size = "normal" }: IGenres) => {
       {genres.split(",").map((genre) => (
         <Hint key={genre} content={genre} size={size} />
       ))}
-    </div>
+    </ul>
   );
 };
 

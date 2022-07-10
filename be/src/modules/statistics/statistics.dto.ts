@@ -16,14 +16,6 @@ export class GetStatisticsDTO {
   offset?: number;
 }
 
-export class WinDTO {
-  @IsNumber()
-  anime_id: number;
-
-  @IsNumber()
-  @Min(0)
-  tries: number;
-}
 
 export class ParticipateDTO {
   @IsISO8601({ strict: true })

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { RequestTypes } from '../../enums/request.enum';
 import Controller from '../../interfaces/controller.interface';
 import validationMiddleware from '../../middlewares/validation.middleware';
-import { AnimeDTO } from './anime.dto';
+import { AnimeDTO, verifyAnswerDTO } from './anime.dto';
 import AnimeService from './anime.service';
 
 class AnimeController implements Controller {
@@ -18,6 +18,7 @@ class AnimeController implements Controller {
   private initRoutes(): void {
     this.router.get('', validationMiddleware(AnimeDTO, RequestTypes.QUERY), this.getAnime);
     this.router.get('/detail', validationMiddleware(AnimeDTO, RequestTypes.QUERY), this.getAnimeDetail);
+    this.router.patch('/verify', validationMiddleware(verifyAnswerDTO, RequestTypes.BODY), this.verifyAnswerHandler);
   }
 
   private getAnime = async (
@@ -29,6 +30,20 @@ class AnimeController implements Controller {
       const queries = req.query;
       const anime = await this.animeService.getAnimeByDate(queries);
       res.send(anime);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  private verifyAnswerHandler = async (
+    req: Request<{}, {}, verifyAnswerDTO>,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { title, date, tries } = req.body;
+      const result = await this.animeService.verifyAnswer(title, date, tries);
+      res.send(result);
     } catch (error) {
       next(error);
     }

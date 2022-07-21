@@ -6,5 +6,4 @@ DB_USER = postgres
 DB_PASSWORD = password
 DB_NAME = test
 
-NODE_ENV = development
 ORIGIN=http://localhost:3000

@@ -24,7 +24,7 @@ const Stats = () => {
     const x = localStorage.getItem("gameData");
     if (x) {
       const data: GameData = JSON.parse(x);
-      if (data?.status === "win") {
+      if (data?.status === "win" || data?.status === "lose") {
         setHideFirst(false);
       }
     }

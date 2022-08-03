@@ -1,10 +1,10 @@
-import { ReactComponent as Close } from "../../assets/x.svg";
-import Counter from "../Game/Counter/Counter";
-import AnimeDetailResponse from "../../interfaces/AnimeDetailResponse.interface";
-
+import { ReactComponent as Close } from "../../../assets/x.svg";
 import Detail from "./Detail";
 import Bottom from "./Bottom";
-import Genres from "../Game/Hints/Genres";
+import AnimeDetailResponse from "../../../interfaces/AnimeDetailResponse.interface";
+import Counter from "../../Game/Counter/Counter";
+import Genres from "../../Game/Hints/Genres";
+import Overlay from "../Overlay";
 
 interface IModal {
   wrongCount: number;
@@ -39,10 +39,7 @@ const Modal = ({
 
   return (
     <>
-      <div
-        onClick={onCloseModal}
-        className="bg-black z-40 fixed top-0 left-0 bg-opacity-50 w-full h-full"
-      ></div>
+      <Overlay onClick={onCloseModal}></Overlay>
       <div className="fixed top-0 left-0 w-full h-full z-50 rounded-md overflow-hidden flex justify-center items-center pointer-events-none ">
         <div className="flex flex-col overflow-auto max-h-full p-4 gap-y-7 max-w-3xl bg-white dark:bg-primary-darker rounded-md relative dark:border dark:border-primary dark:border-opacity-10 pointer-events-auto">
           <Close

@@ -3,9 +3,10 @@ import useGame from "../hooks/useGame";
 import Board from "../components/Game/Board";
 import Keypad from "../components/Game/Keypad/Keypad";
 import WrongTiles from "../components/Game/Tiles/WrongTiles";
-import Modal from "../components/Modal/Modal";
 import { ReactComponent as Loading } from "../assets/loading.svg";
 import Hints from "../components/Game/Hints/Hints";
+import ErrorModal from "../components/Modal/ErrorModal/ErrorModal";
+import Modal from "../components/Modal/AnimeDetailModal/Modal";
 
 const Main = () => {
   const [modal, setModal] = useState(false);
@@ -24,7 +25,6 @@ const Main = () => {
     loading,
     media_type,
   } = useGame();
-
 
   const handleCloseModal = () => {
     setModal(false);
@@ -56,6 +56,8 @@ const Main = () => {
           </>
         )}
       </div>
+      {status === "error" && <ErrorModal />}
+
       {modal && !loading && (
         <Modal
           wrongCount={wrongCount}

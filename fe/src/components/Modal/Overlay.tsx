@@ -1,8 +1,13 @@
-import React from "react";
+interface IOverlay {
+  onClick?: () => void;
+}
 
-const Overlay = () => {
+const Overlay = ({ onClick }: IOverlay) => {
   return (
-    <div className=" bg-black z-40 fixed top-0 left-0 bg-opacity-50 w-screen h-screen"></div>
+    <div
+      onClick={onClick}
+      className=" bg-black z-40 fixed top-0 left-0 bg-opacity-50 w-screen h-screen"
+    ></div>
   );
 };
 

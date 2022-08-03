@@ -9,7 +9,7 @@ export const LIMIT = 10;
 const state = ["correct", "incorrect"] as const;
 export type State = typeof state[number];
 
-const status = ["in_progress", "win", "lose"] as const;
+const status = ["in_progress", "win", "lose", "error"] as const;
 export type Status = typeof status[number];
 
 const theme = ["dark", "light"] as const;

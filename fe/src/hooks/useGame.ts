@@ -37,7 +37,7 @@ const useGame = () => {
           media_type: data.media_type,
         });
       } catch {
-        setGameData({ ...initialGameData });
+        setGameData({ ...initialGameData, status: "error" });
       } finally {
         setLoading(false);
       }
@@ -95,6 +95,7 @@ const useGame = () => {
             setAnimeDetail(data.anime);
           } catch (error) {
             // error handling
+            status = "error";
           } finally {
             setLoading(false);
           }
@@ -111,6 +112,7 @@ const useGame = () => {
             setAnimeDetail(data);
           } catch (error) {
             // error handling
+            status = "error";
           } finally {
             setLoading(false);
           }

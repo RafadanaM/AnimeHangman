@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimeService } from "../api/services/AnimeService";
 import { StatisticService } from "../api/services/StatisticService";
-
 import { differenceToTomorrow, generateCurrentDate } from "../utils/date.utils";
 import { initialAnimeDetail, initialGameData } from "../utils/gameRule";
 import { alphaNumeric, isAlphanumeric } from "../utils/utils";
@@ -81,26 +80,40 @@ const useGame = () => {
         const guess = guessArr.join("");
         currentGuess = guess;
         if (guess === gameData.title) {
-          const data = await AnimeService.verifyAnswer(
-            currentGuess,
-            gameData.wrongCount,
-            gameData.date
-          );
-          if (data.isCorrect) {
-            status = "win";
-          } else {
-            status = "lose";
+          try {
+            setLoading(true);
+            const data = await AnimeService.verifyAnswer(
+              currentGuess,
+              gameData.wrongCount,
+              gameData.date
+            );
+            if (data.isCorrect) {
+              status = "win";
+            } else {
+              status = "lose";
+            }
+            setAnimeDetail(data.anime);
+          } catch (error) {
+            // error handling
+          } finally {
+            setLoading(false);
           }
-          setAnimeDetail(data.anime);
         }
         history[character] = "correct";
       } else {
         const nextWrongCount = wrongCount + 1;
         wrongCount = nextWrongCount;
         if (nextWrongCount >= gameData.max_life) {
-          status = "lose";
-          const data = await AnimeService.getAnimeDetailByDate(gameData.date);
-          setAnimeDetail(data);
+          try {
+            setLoading(true);
+            status = "lose";
+            const data = await AnimeService.getAnimeDetailByDate(gameData.date);
+            setAnimeDetail(data);
+          } catch (error) {
+            // error handling
+          } finally {
+            setLoading(false);
+          }
         }
 
         history[character] = "incorrect";
@@ -133,7 +146,8 @@ const useGame = () => {
       if (
         gameData.status === "win" ||
         gameData.status === "lose" ||
-        gameData.wrongCount >= gameData.max_life
+        gameData.wrongCount >= gameData.max_life ||
+        loading
       ) {
         return;
       }
@@ -142,7 +156,13 @@ const useGame = () => {
         addNewGuess(character.toUpperCase());
       }
     },
-    [addNewGuess, gameData.max_life, gameData.status, gameData.wrongCount]
+    [
+      addNewGuess,
+      gameData.max_life,
+      gameData.status,
+      gameData.wrongCount,
+      loading,
+    ]
   );
 
   const handleKeyUp = useCallback(
@@ -150,7 +170,8 @@ const useGame = () => {
       if (
         gameData.status === "win" ||
         gameData.status === "lose" ||
-        gameData.wrongCount >= gameData.max_life
+        gameData.wrongCount >= gameData.max_life ||
+        loading
       ) {
         return;
       }
@@ -159,7 +180,13 @@ const useGame = () => {
         addNewGuess(key.toUpperCase());
       }
     },
-    [addNewGuess, gameData.max_life, gameData.status, gameData.wrongCount]
+    [
+      addNewGuess,
+      gameData.max_life,
+      gameData.status,
+      gameData.wrongCount,
+      loading,
+    ]
   );
 
   return {

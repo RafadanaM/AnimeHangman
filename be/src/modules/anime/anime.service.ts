@@ -42,7 +42,7 @@ class AnimeService {
       isCorrect = true;
     }
 
-    return { isCorrect, anime };
+    return { isCorrect };
   }
 
   public async getAnimeDetailByDate(data: AnimeDTO): Promise<Anime> {

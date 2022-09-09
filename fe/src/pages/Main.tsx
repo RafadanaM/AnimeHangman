@@ -7,9 +7,11 @@ import { ReactComponent as Loading } from "../assets/loading.svg";
 import Hints from "../components/Game/Hints/Hints";
 import ErrorModal from "../components/Modal/ErrorModal/ErrorModal";
 import Modal from "../components/Modal/AnimeDetailModal/Modal";
+import { ModalStatus } from "../utils/utils";
+import { initialAnimeDetail } from "../utils/gameRule";
 
 const Main = () => {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState<ModalStatus>("close");
   const {
     currentGuess,
     handleKeyUp,
@@ -22,12 +24,14 @@ const Main = () => {
     genres,
     animeDetail,
     year,
-    loading,
+    boardLoading,
+    detailLoading,
     media_type,
+    handleAnimationEnd,
   } = useGame();
 
   const handleCloseModal = () => {
-    setModal(false);
+    setModal("close");
   };
 
   useEffect(() => {
@@ -39,18 +43,34 @@ const Main = () => {
   }, [handleKeyUp]);
 
   useEffect(() => {
-    setModal(status === "lose" || status === "win");
-  }, [status]);
+    const isLoseOrWin = status === "lose" || status === "win";
+    if (isLoseOrWin && detailLoading === "loading") {
+      setModal("loading");
+    } else if (
+      isLoseOrWin &&
+      (detailLoading === "success" || detailLoading === "initial") &&
+      animeDetail.id > 0
+    ) {
+      setModal("open");
+    }
+  }, [status, detailLoading, animeDetail.id]);
 
   return (
     <>
       <div className="flex flex-col justify-center items-center w-[1024px] 2xl:w-[1440px] max-w-full h-[calc(100%-64px)] mx-auto gap-y-2 py-3 px-2 md:px-0">
-        {loading ? (
-          <Loading className=" dark:fill-primary w-10 h-10 animate-spin" />
+        {boardLoading ? (
+          <Loading className="dark:fill-primary w-10 h-10 animate-spin" />
         ) : (
           <>
-            <WrongTiles wrongNumber={wrongCount} maxLife={max_life} />
-            <Board sentence={currentGuess} />
+            <WrongTiles
+              wrongNumber={wrongCount}
+              maxLife={max_life}
+              onTransitionEnd={handleAnimationEnd}
+            />
+            <Board
+              sentence={currentGuess}
+              onAnimationEnd={handleAnimationEnd}
+            />
             <Hints genres={genres} media_type={media_type} year={year} />
             <Keypad keyHistory={history} onClick={handleOnClick} />
           </>
@@ -58,8 +78,9 @@ const Main = () => {
       </div>
       {status === "error" && <ErrorModal />}
 
-      {modal && !loading && (
+      {modal !== "close" && (
         <Modal
+          modalStatus={modal}
           wrongCount={wrongCount}
           maxLife={max_life}
           title={title}

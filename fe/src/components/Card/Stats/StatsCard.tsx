@@ -33,7 +33,6 @@ const StatsCard = forwardRef<HTMLDivElement | null, IStatCard>(
     return (
       <div
         ref={mergeRefs(cardRef, ref)}
-        // style={{ transitionDelay: `${delay}ms` }}
         className={`bg-primary dark:bg-primary-darker h-40 rounded-md p-2 shadow-lg border dark:border-secondary-darker flex overflow-hidden divide-x-2 gap-2 transition-all ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-24"
         }`}

@@ -1,36 +1,40 @@
+import Skeleton from "react-loading-skeleton";
+
 interface IDetail {
   rank?: number;
   score?: number;
   type?: string;
   status?: string;
   className?: string;
+  isLoading: boolean;
 }
-const Detail = ({ rank, score, type, status, className = "" }: IDetail) => {
+const Detail = ({
+  rank,
+  score,
+  type,
+  status,
+  isLoading,
+  className = "",
+}: IDetail) => {
   const formatStatus = status?.split("_").join(" ");
+
+  const renderDetail = (title: string, data: string | number | undefined) => {
+    return !isLoading ? (
+      <div>
+        {title} : <span className="font-medium">{data}</span>
+      </div>
+    ) : (
+      <Skeleton />
+    );
+  };
   return (
     <div
       className={`mt-4 font-bold px-1 dark:text-primary capitalize ${className}`}
     >
-      {rank && (
-        <div>
-          Rank : <span className="font-medium">{rank}</span>
-        </div>
-      )}
-      {score && (
-        <div>
-          Score : <span className="font-medium">{score}</span>
-        </div>
-      )}
-      {type && (
-        <div>
-          Type : <span className="font-medium">{type}</span>
-        </div>
-      )}
-      {status && (
-        <div>
-          Status : <span className="font-medium">{formatStatus}</span>
-        </div>
-      )}
+      {renderDetail("Rank", rank)}
+      {renderDetail("Score", score)}
+      {renderDetail("Type", type)}
+      {renderDetail("Status", formatStatus)}
     </div>
   );
 };

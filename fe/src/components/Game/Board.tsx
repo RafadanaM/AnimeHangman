@@ -3,15 +3,17 @@ import Tile from "./Tiles/Tile";
 
 interface IBoard {
   sentence: string;
+  onAnimationEnd: React.AnimationEventHandler<HTMLDivElement>
 }
 
-const Board = ({ sentence }: IBoard) => {
+const Board = ({ sentence, onAnimationEnd }: IBoard) => {
   return (
     <div className="flex-1 flex flex-col justify-center">
       <div className="w-full flex relative justify-center items-center flex-wrap gap-x-1 gap-y-3">
         {[...sentence].map((letter, id) => {
           return (
             <Tile
+            onAnimationEnd={onAnimationEnd}
               key={id}
               withBorder={isAlphanumeric(letter) || letter === "_"}
               className={isAlphanumeric(letter) ? "correct" : ""}

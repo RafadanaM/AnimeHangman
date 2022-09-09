@@ -3,11 +3,12 @@ import { AnimeService } from "../api/services/AnimeService";
 import { StatisticService } from "../api/services/StatisticService";
 import { differenceToTomorrow, generateCurrentDate } from "../utils/date.utils";
 import { initialAnimeDetail, initialGameData } from "../utils/gameRule";
-import { alphaNumeric, isAlphanumeric } from "../utils/utils";
+import { alphaNumeric, isAlphanumeric, LoadingStatus } from "../utils/utils";
 import useLocalStorage from "./useLocalStorage";
 
 const useGame = () => {
-  const [loading, setLoading] = useState(false);
+  const [boardLoading, setBoardLoading] = useState(false);
+  const [detailLoading, setDetailLoading] = useState<LoadingStatus>("initial");
   const [gameData, setGameData] = useLocalStorage("gameData", {
     ...initialGameData,
   });
@@ -16,11 +17,27 @@ const useGame = () => {
     ...initialAnimeDetail,
   });
 
+  const handleAnimationEnd = async () => {
+    try {
+      if (detailLoading !== "initial") return;
+      if (gameData.status === "lose" || gameData.status === "win") {
+        setDetailLoading("loading");
+        const data = await AnimeService.getAnimeDetailByDate(gameData.date);
+        console.log(data);
+        setAnimeDetail(data);
+        setDetailLoading("success");
+      }
+    } catch (error) {
+      setGameData((prevState) => ({ ...prevState, status: "error" }));
+      setDetailLoading("error");
+    }
+  };
+
   useEffect(() => {
     const currentDateString = generateCurrentDate();
     const fetchData = async (currentDateString: string) => {
       try {
-        setLoading(true);
+        setBoardLoading(true);
         const data = await AnimeService.getAnimeByDate(currentDateString);
         await StatisticService.participate(currentDateString);
         setGameData({
@@ -39,7 +56,7 @@ const useGame = () => {
       } catch {
         setGameData({ ...initialGameData, status: "error" });
       } finally {
-        setLoading(false);
+        setBoardLoading(false);
       }
     };
 
@@ -81,23 +98,15 @@ const useGame = () => {
         currentGuess = guess;
         if (guess === gameData.title) {
           try {
-            setLoading(true);
             const data = await AnimeService.verifyAnswer(
               currentGuess,
               gameData.wrongCount,
               gameData.date
             );
-            if (data.isCorrect) {
-              status = "win";
-            } else {
-              status = "lose";
-            }
-            setAnimeDetail(data.anime);
+            status = data.isCorrect ? "win" : "lose";
           } catch (error) {
             // error handling
             status = "error";
-          } finally {
-            setLoading(false);
           }
         }
         history[character] = "correct";
@@ -105,17 +114,7 @@ const useGame = () => {
         const nextWrongCount = wrongCount + 1;
         wrongCount = nextWrongCount;
         if (nextWrongCount >= gameData.max_life) {
-          try {
-            setLoading(true);
-            status = "lose";
-            const data = await AnimeService.getAnimeDetailByDate(gameData.date);
-            setAnimeDetail(data);
-          } catch (error) {
-            // error handling
-            status = "error";
-          } finally {
-            setLoading(false);
-          }
+          status = "lose";
         }
 
         history[character] = "incorrect";
@@ -137,7 +136,6 @@ const useGame = () => {
       gameData.status,
       gameData.title,
       gameData.wrongCount,
-      setAnimeDetail,
       setGameData,
     ]
   );
@@ -149,7 +147,7 @@ const useGame = () => {
         gameData.status === "win" ||
         gameData.status === "lose" ||
         gameData.wrongCount >= gameData.max_life ||
-        loading
+        boardLoading
       ) {
         return;
       }
@@ -163,7 +161,7 @@ const useGame = () => {
       gameData.max_life,
       gameData.status,
       gameData.wrongCount,
-      loading,
+      boardLoading,
     ]
   );
 
@@ -173,7 +171,7 @@ const useGame = () => {
         gameData.status === "win" ||
         gameData.status === "lose" ||
         gameData.wrongCount >= gameData.max_life ||
-        loading
+        boardLoading
       ) {
         return;
       }
@@ -187,7 +185,7 @@ const useGame = () => {
       gameData.max_life,
       gameData.status,
       gameData.wrongCount,
-      loading,
+      boardLoading,
     ]
   );
 
@@ -204,7 +202,9 @@ const useGame = () => {
     title: gameData.title,
     year: gameData.release_year,
     media_type: gameData.media_type,
-    loading,
+    boardLoading,
+    detailLoading,
+    handleAnimationEnd,
     animeDetail,
   };
 };

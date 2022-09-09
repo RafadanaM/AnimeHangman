@@ -5,6 +5,7 @@ interface ITile {
   className?: string;
   withBorder?: boolean;
   isFirstWord?: boolean;
+  onAnimationEnd: React.AnimationEventHandler<HTMLDivElement>
 }
 
 const Tile = ({
@@ -12,9 +13,11 @@ const Tile = ({
   className,
   withBorder = true,
   isFirstWord = false,
+  onAnimationEnd
 }: ITile) => {
   return (
     <div
+      onAnimationEnd={onAnimationEnd}
       className={`flex h-14 md:h-20 items-center justify-center rounded-md dark:text-primary font-bold ${
         withBorder
           ? `w-10 md:w-16 bg-primary text-xl md:text-2xl ${

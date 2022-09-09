@@ -9,6 +9,12 @@ export const LIMIT = 10;
 const state = ["correct", "incorrect"] as const;
 export type State = typeof state[number];
 
+const loadingStatus = ["initial", "loading", "success", "error"] as const;
+export type LoadingStatus = typeof loadingStatus[number];
+
+const modalStatus = ["close", "loading", "open"] as const;
+export type ModalStatus = typeof modalStatus[number];
+
 const status = ["in_progress", "win", "lose", "error"] as const;
 export type Status = typeof status[number];
 

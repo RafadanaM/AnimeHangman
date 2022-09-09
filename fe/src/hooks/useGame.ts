@@ -56,6 +56,7 @@ const useGame = () => {
       } catch {
         setGameData({ ...initialGameData, status: "error" });
       } finally {
+        setAnimeDetail({ ...initialAnimeDetail });
         setBoardLoading(false);
       }
     };
@@ -63,7 +64,7 @@ const useGame = () => {
     if (currentDateString !== gameData.date || gameData.shouldFetch) {
       fetchData(currentDateString);
     }
-  }, [gameData.date, gameData.shouldFetch, setGameData]);
+  }, [gameData.date, gameData.shouldFetch, setAnimeDetail, setGameData]);
 
   useEffect(() => {
     let timer = setTimeout(() => {

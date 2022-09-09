@@ -8,7 +8,6 @@ import Hints from "../components/Game/Hints/Hints";
 import ErrorModal from "../components/Modal/ErrorModal/ErrorModal";
 import Modal from "../components/Modal/AnimeDetailModal/Modal";
 import { ModalStatus } from "../utils/utils";
-import { initialAnimeDetail } from "../utils/gameRule";
 
 const Main = () => {
   const [modal, setModal] = useState<ModalStatus>("close");

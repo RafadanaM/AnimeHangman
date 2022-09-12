@@ -44,8 +44,6 @@ const Main = () => {
   }, [handleKeyUp]);
 
   useEffect(() => {
-    console.log({ status, detailLoading, id: animeDetail.id });
-
     const isLoseOrWin = status === "lose" || status === "win";
     if (isLoseOrWin && detailLoading === "loading") {
       setModal("loading");

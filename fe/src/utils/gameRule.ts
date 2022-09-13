@@ -13,7 +13,7 @@ export const initialGameData: GameData = {
   genres: "",
   release_year: 0,
   shouldFetch: true,
-  media_type: "unknown"
+  media_type: "unknown",
 };
 
 export const initialAnimeDetail: AnimeDetailResponse = {

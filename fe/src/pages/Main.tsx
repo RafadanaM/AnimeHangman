@@ -8,6 +8,7 @@ import Hints from "../components/Game/Hints/Hints";
 import ErrorModal from "../components/Modal/ErrorModal/ErrorModal";
 import Modal from "../components/Modal/AnimeDetailModal/Modal";
 import { ModalStatus } from "../utils/utils";
+import { generateCurrentDate } from "../utils/date.utils";
 
 const Main = () => {
   const [modal, setModal] = useState<ModalStatus>("close");
@@ -26,6 +27,7 @@ const Main = () => {
     boardLoading,
     detailLoading,
     media_type,
+    date,
     handleAnimationEnd,
   } = useGame();
 
@@ -42,18 +44,20 @@ const Main = () => {
   }, [handleKeyUp]);
 
   useEffect(() => {
+    console.log({ status, detailLoading, id: animeDetail.id });
+
     const isLoseOrWin = status === "lose" || status === "win";
     if (isLoseOrWin && detailLoading === "loading") {
       setModal("loading");
     } else if (
       isLoseOrWin &&
       (detailLoading === "success" || detailLoading === "initial") &&
-      animeDetail.id > 0
+      animeDetail.id > 0 &&
+      date === generateCurrentDate()
     ) {
       setModal("open");
     }
-  }, [status, detailLoading, animeDetail.id]);
-
+  }, [status, detailLoading, animeDetail.id, date]);
   return (
     <>
       <div className="flex flex-col justify-center items-center w-[1024px] 2xl:w-[1440px] max-w-full h-[calc(100%-64px)] mx-auto gap-y-2 py-3 px-2 md:px-0">
@@ -79,6 +83,7 @@ const Main = () => {
 
       {modal !== "close" && (
         <Modal
+          type={media_type}
           modalStatus={modal}
           wrongCount={wrongCount}
           maxLife={max_life}

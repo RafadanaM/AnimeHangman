@@ -13,6 +13,7 @@ interface IModal {
   maxLife: number;
   title: string;
   genres: string;
+  type: string;
   animeDetail: AnimeDetailResponse;
   modalStatus: ModalStatus;
   onCloseModal: () => void;
@@ -26,6 +27,7 @@ const Modal = ({
   genres,
   animeDetail,
   modalStatus,
+  type,
 }: IModal) => {
   const choosenColor =
     wrongCount < maxLife
@@ -78,6 +80,7 @@ const Modal = ({
                 rank={animeDetail.rank}
                 score={animeDetail.mean_score}
                 status={animeDetail.status}
+                type={type}
               />
             </div>
 

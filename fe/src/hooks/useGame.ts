@@ -9,21 +9,23 @@ import useLocalStorage from "./useLocalStorage";
 const useGame = () => {
   const [boardLoading, setBoardLoading] = useState(false);
   const [detailLoading, setDetailLoading] = useState<LoadingStatus>("initial");
-  const [gameData, setGameData] = useLocalStorage("gameData", {
-    ...initialGameData,
-  });
+  const [gameData, setGameData] = useLocalStorage("gameData", initialGameData);
 
-  const [animeDetail, setAnimeDetail] = useLocalStorage("animeDetail", {
-    ...initialAnimeDetail,
-  });
+  const [animeDetail, setAnimeDetail] = useLocalStorage(
+    "animeDetail",
+    initialAnimeDetail
+  );
 
   const handleAnimationEnd = async () => {
+    if (detailLoading !== "initial") return;
     try {
-      if (detailLoading !== "initial") return;
-      if (gameData.status === "lose" || gameData.status === "win") {
+      if (
+        (gameData.status === "lose" || gameData.status === "win") &&
+        animeDetail.id === initialAnimeDetail.id
+      ) {
         setDetailLoading("loading");
         const data = await AnimeService.getAnimeDetailByDate(gameData.date);
-        console.log(data);
+
         setAnimeDetail(data);
         setDetailLoading("success");
       }
@@ -56,12 +58,12 @@ const useGame = () => {
       } catch {
         setGameData({ ...initialGameData, status: "error" });
       } finally {
-        setAnimeDetail({ ...initialAnimeDetail });
         setBoardLoading(false);
       }
     };
 
     if (currentDateString !== gameData.date || gameData.shouldFetch) {
+      setAnimeDetail(initialAnimeDetail);
       fetchData(currentDateString);
     }
   }, [gameData.date, gameData.shouldFetch, setAnimeDetail, setGameData]);

@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  db:
+    container_name: postgres-db
+    image: postgres:14.2-alpine
+    restart: always
+    ports:
+      - 6543:5432
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+    volumes:
+       - ./data:/var/lib/postgresql/data
+  
+  api:
+    depends_on:
+      - db
+    build:
+      context: /be
+      target: development
+    volumes:
+      - ./be:/app
+      - /app/node_modules
+    ports:
+      - 5001:5001
+    environment:
+      NODE_ENV: development
+      ORIGIN: ${DEV_ORIGIN}
+      PORT: 5001
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD} 
+      DB_NAME: ${DB_NAME}
+  
+    command: npm run start:dev 

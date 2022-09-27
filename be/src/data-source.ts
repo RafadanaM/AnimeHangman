@@ -8,7 +8,7 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   logging: false,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+  // ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
   synchronize: process.env.NODE_ENV === 'production' ? false : true,
   entities: [__dirname + '/modules/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/db/migrations/*{.ts,.js}'],

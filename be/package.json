@@ -4,14 +4,15 @@
   "description": "",
   "main": "build/server.js",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=development ts-node-dev src/server.ts",
-    "start": "cross-env NODE_ENV=production node ./build/server.js",
-    "build": "rimraf ./build && tsc ",
+    "start:dev": "cross-env NODE_ENV=development ts-node-dev --poll src/server.ts",
+    "start": "node ./build/server.js",
+    "build": "rimraf ./build && tsc && npm run copy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-commonjs -d ./src/data-source.ts",
     "migration:generate": "npm run typeorm migration:generate",
     "migration:run": "npm run typeorm migration:run",
-    "migration:revert": "npm run typeorm migration:revert"
+    "migration:revert": "npm run typeorm migration:revert",
+    "copy": "copyfiles -u 1 src/db/data.json build/"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +40,7 @@
     "@types/node": "^18.0.1",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.2.0",
     "husky": "^7.0.4",
     "prettier": "2.4.1",

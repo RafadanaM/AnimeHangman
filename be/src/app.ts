@@ -9,7 +9,8 @@ import jsonfile from 'jsonfile';
 import cors from 'cors';
 import DataJSON from './interfaces/datajson.interface';
 import Statistics from './modules/statistics/statistics.entity';
-const JSON_FILE_PATH = './src/db/data.json';
+import path from 'path';
+const JSON_FILE_PATH = './db/data.json';
 
 class App {
   public app: express.Application;
@@ -32,7 +33,7 @@ class App {
     const statisticsRepository = AppDataSource.getRepository(Statistics);
     const count = await animeRepository.count();
     if (count === 0) {
-      const file: DataJSON | undefined = await jsonfile.readFile(JSON_FILE_PATH);
+      const file: DataJSON | undefined = await jsonfile.readFile(path.join(__dirname, JSON_FILE_PATH));
 
       if (file) {
         await animeRepository

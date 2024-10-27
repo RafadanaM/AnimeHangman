@@ -41,6 +41,11 @@ const useGame = () => {
       try {
         setBoardLoading(true);
         const data = await AnimeService.getAnimeByDate(currentDateString);
+        if (!data) {
+          setGameData({ ...initialGameData, status: "error" });
+          setBoardLoading(false);
+          return;
+        }
         await StatisticService.participate(currentDateString);
         setGameData({
           status: "in_progress",

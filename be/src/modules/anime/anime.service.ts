@@ -8,16 +8,14 @@ class AnimeService {
   private animeRepository = AppDataSource.getRepository(Anime);
   private staticsService = new StatisticsService();
 
-  public async getAnimeByDate(data: AnimeDTO): Promise<Anime> {
+  public async getAnimeByDate(data: AnimeDTO): Promise<Anime | null> {
     const date = data.date;
     const anime = await this.animeRepository
       .createQueryBuilder('anime')
       .select(['anime.date', 'anime.title', 'anime.life', 'anime.genres', 'anime.release_year', 'anime.media_type'])
       .where('anime.date = :date', { date })
       .getOne();
-    if (!anime) {
-      throw new NotFoundException(`Cannot find anime with date of ${date}`);
-    }
+
     return anime;
   }
 

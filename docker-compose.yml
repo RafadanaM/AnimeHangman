@@ -43,7 +43,8 @@ services:
     container_name: gatapi
     image: rafadanam/gatapi:latest
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     build:
       context: ./be
       target: production

@@ -61,7 +61,7 @@ class App {
   private initHealthCheck() {
     this.app.get('/healthcheck', (_req, res) => {
       res.send({
-        status: 'ok',
+        status: 'OK',
         version: process.env.APP_VERSION || 'No Version Specified',
       });
     });

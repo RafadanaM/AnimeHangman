@@ -1,4 +1,4 @@
-FROM node:16-alpine as development
+FROM node:16-alpine AS base
 
 WORKDIR /app
 
@@ -6,13 +6,30 @@ COPY package*.json ./
 
 RUN npm install
 
+
+FROM base AS builder
+
 COPY . .
 
 RUN npm run build
 
-FROM node:16-alpine as production
+
+FROM base AS development
+
+WORKDIR /app
+
+COPY . . 
+
+CMD ["npm", "run", "start:dev"]
+
+
+FROM node:16-alpine AS production
 
 ARG NODE_ENV=production
+
+ARG APP_VERSION
+
+ENV APP_VERSION=${APP_VERSION}
 
 ENV NODE_ENV=${NODE_ENV}
 
@@ -23,6 +40,6 @@ COPY package*.json ./
 # ci or install 
 RUN npm ci --only=production
 
-COPY --from=development /app/build ./build 
+COPY --from=builder /app/build ./build 
 
 CMD [ "node", "build/server.js" ]

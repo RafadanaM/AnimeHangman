@@ -22,6 +22,7 @@ class App {
     this.port = port;
 
     this.initMiddlewares();
+    this.initHealthCheck();
     this.initControllers(controllers);
     this.initErrorHandling();
     this.initRouteNotFound();
@@ -55,6 +56,15 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'short'));
+  }
+
+  private initHealthCheck() {
+    this.app.get('/healthcheck', (_req, res) => {
+      res.send({
+        status: 'ok',
+        version: process.env.APP_VERSION || 'No Version Specified',
+      });
+    });
   }
 
   private initControllers(controllers: Controller[]) {

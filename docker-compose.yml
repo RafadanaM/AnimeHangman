@@ -47,6 +47,8 @@ services:
         condition: service_healthy
     build:
       context: ./be
+      args:
+        APP_VERSION: ${APP_VERSION}
       target: production
     ports:
       - ${API_PORT}:5000

@@ -5,7 +5,6 @@ import Stats from "./pages/Stats";
 
 function App() {
   return (
-    // <div className="w-full h-full dark:bg-slate-800 overflow-auto">
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Main />} />
@@ -13,7 +12,6 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
-    // </div>
   );
 }
 

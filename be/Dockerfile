@@ -1,4 +1,4 @@
-FROM node:16-alpine AS base
+FROM node:18-alpine AS base
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ COPY . .
 CMD ["npm", "run", "start:dev"]
 
 
-FROM node:16-alpine AS production
+FROM node:18-alpine AS production
 
 ARG NODE_ENV=production
 

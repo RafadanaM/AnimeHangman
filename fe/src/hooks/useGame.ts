@@ -16,8 +16,7 @@ const useGame = () => {
     initialAnimeDetail,
   );
 
-  const handleAnimationEnd = async () => {
-    if (detailLoading !== "initial") return;
+  const handleAnimationEnd = useCallback(async () => {
     try {
       if (
         (gameData.status === "lose" || gameData.status === "win") &&
@@ -33,7 +32,13 @@ const useGame = () => {
       setGameData((prevState) => ({ ...prevState, status: "error" }));
       setDetailLoading("error");
     }
-  };
+  }, [
+    animeDetail.id,
+    gameData.date,
+    gameData.status,
+    setAnimeDetail,
+    setGameData,
+  ]);
 
   useEffect(() => {
     const currentDateString = generateCurrentDate();

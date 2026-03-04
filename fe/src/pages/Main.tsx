@@ -48,6 +48,7 @@ const Main = () => {
     if (isLoseOrWin) {
       handleAnimationEnd();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   useEffect(() => {

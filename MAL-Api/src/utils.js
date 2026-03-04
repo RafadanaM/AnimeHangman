@@ -13,7 +13,7 @@ export const toJsonFile = async (filename = "", data = []) => {
 };
 
 export const formatData = (array) => {
-  const randomNumber = new Uint32Array(1);
+  const randomNumber = new Uint8Array(2);
 
   return array
     .filter((x) => x.node.title.length <= 50)
@@ -43,7 +43,7 @@ export const formatData = (array) => {
       crypto.getRandomValues(randomNumber);
 
       return {
-        id: x.node.id * randomNumber[0],
+        id,
         title: x.node.title.latinize(),
         description: x.node?.synopsis,
         image: x.node?.main_picture?.medium,

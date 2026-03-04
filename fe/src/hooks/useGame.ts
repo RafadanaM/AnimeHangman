@@ -13,7 +13,7 @@ const useGame = () => {
 
   const [animeDetail, setAnimeDetail] = useLocalStorage(
     "animeDetail",
-    initialAnimeDetail
+    initialAnimeDetail,
   );
 
   const handleAnimationEnd = async () => {
@@ -74,13 +74,16 @@ const useGame = () => {
   }, [gameData.date, gameData.shouldFetch, setAnimeDetail, setGameData]);
 
   useEffect(() => {
-    let timer = setTimeout(() => {
-      setGameData((prevState) => ({
-        ...prevState,
-        shouldFetch: true,
-      }));
-      setAnimeDetail({ ...initialAnimeDetail });
-    }, (differenceToTomorrow() + 1) * 1000);
+    let timer = setTimeout(
+      () => {
+        setGameData((prevState) => ({
+          ...prevState,
+          shouldFetch: true,
+        }));
+        setAnimeDetail({ ...initialAnimeDetail });
+      },
+      (differenceToTomorrow() + 1) * 1000,
+    );
 
     return () => clearTimeout(timer);
   }, [setAnimeDetail, setGameData]);
@@ -109,7 +112,7 @@ const useGame = () => {
             const data = await AnimeService.verifyAnswer(
               currentGuess,
               gameData.wrongCount,
-              gameData.date
+              gameData.date,
             );
             status = data.isCorrect ? "win" : "lose";
           } catch (error) {
@@ -145,7 +148,7 @@ const useGame = () => {
       gameData.title,
       gameData.wrongCount,
       setGameData,
-    ]
+    ],
   );
 
   const handleOnClick = useCallback(
@@ -170,7 +173,7 @@ const useGame = () => {
       gameData.status,
       gameData.wrongCount,
       boardLoading,
-    ]
+    ],
   );
 
   const handleKeyUp = useCallback(
@@ -194,7 +197,7 @@ const useGame = () => {
       gameData.status,
       gameData.wrongCount,
       boardLoading,
-    ]
+    ],
   );
 
   return {

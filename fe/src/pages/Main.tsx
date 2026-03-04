@@ -45,6 +45,13 @@ const Main = () => {
 
   useEffect(() => {
     const isLoseOrWin = status === "lose" || status === "win";
+    if (isLoseOrWin) {
+      handleAnimationEnd();
+    }
+  }, [status]);
+
+  useEffect(() => {
+    const isLoseOrWin = status === "lose" || status === "win";
     if (isLoseOrWin && detailLoading === "loading") {
       setModal("loading");
     } else if (
@@ -63,15 +70,8 @@ const Main = () => {
           <Loading className="dark:fill-primary w-10 h-10 animate-spin" />
         ) : (
           <>
-            <WrongTiles
-              wrongNumber={wrongCount}
-              maxLife={max_life}
-              onTransitionEnd={handleAnimationEnd}
-            />
-            <Board
-              sentence={currentGuess}
-              onAnimationEnd={handleAnimationEnd}
-            />
+            <WrongTiles wrongNumber={wrongCount} maxLife={max_life} />
+            <Board sentence={currentGuess} />
             <Hints genres={genres} media_type={media_type} year={year} />
             <Keypad keyHistory={history} onClick={handleOnClick} />
           </>

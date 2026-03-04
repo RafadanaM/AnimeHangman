@@ -7,7 +7,6 @@ try {
   shuffleArray(animeData);
   const formattedData = formatData(animeData);
   await toJsonFile(JSON_FILE, formattedData);
-  console.log(animeData);
 } catch (error) {
   console.log(error);
 }

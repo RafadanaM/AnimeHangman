@@ -58,7 +58,7 @@ const Main = () => {
     } else if (
       isLoseOrWin &&
       (detailLoading === "success" || detailLoading === "initial") &&
-      animeDetail.id > 0 &&
+      animeDetail.id >= 0 &&
       date === generateCurrentDate()
     ) {
       setModal("open");
